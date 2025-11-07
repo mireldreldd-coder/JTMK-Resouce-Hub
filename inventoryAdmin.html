@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JTMK Resource Hub - Inventory Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#1E3A8A',
+                        'bright-blue': '#3B82F6',
+                        'emerald': '#10B981',
+                        'light-gray': '#F9FAFB',
+                        'dark-gray': '#111827',
+                        'light-red': '#FEE2E2',
+                        'dark-red': '#991B1B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);}
+        .modal { display: none; }
+        .modal.flex { display: flex; }
+    </style>
+</head>
+<body class="bg-light-gray min-h-screen">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="flex justify-between items-center px-6 py-4">
+            <div class="flex items-center space-x-2 logo">
+              <img src="image/logo_jtmk_2021.png" alt="JTMK Logo" class="h-8 w-8 object-contain"/>
+              <span class="text-2xl font-bold text-navy">JTMK Resource Hub</span>
+            </div>
+            <div class="relative">
+                <button onclick="toggleProfileDropdown()" class="flex items-center space-x-2 hover:bg-gray-50 rounded-lg px-3 py-2 transition-colors">
+                    <div class="w-8 h-8 bg-bright-blue rounded-full flex items-center justify-center">
+                        <span id="profileInitials" class="text-white text-sm font-medium">AD</span>
+                    </div>
+                    <span id="profileName" class="text-dark-gray font-medium">Admin</span>
+                    <svg id="profileArrow" class="w-4 h-4 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="profileDropdown" class="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 hidden">
+                    <div class="px-4 py-3 border-b border-gray-100">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-bright-blue rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-medium" id="profileDropdownInitials">AD</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-dark-gray" id="profileDropdownName">Admin User</p>
+                                <p class="text-xs text-gray-500" id="profileDropdownEmail">admin@jtmk.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <a href="login.html" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                            <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                            Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <aside class="w-64 bg-white shadow-sm min-h-screen">
+            <nav class="mt-6">
+                <div class="space-y-2">
+                    <div class="px-4">
+                        <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                            Overview
+                        </h3>
+                        <a href="maindashboard.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path></svg>
+                            Dashboard
+                        </a>
+                    </div>
+
+                    <div class="px-4 pt-4"> 
+                        <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                            Management
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="approvalAdmin.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Approvals
+                                <span id="pendingCountBadge" class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full"></span>
+                            </a>
+                            <a href="inventoryAdmin.html" class="flex items-center px-4 py-3 text-bright-blue bg-blue-50 rounded-lg font-medium">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                Inventory
+                            </a>
+                            <a href="userManagement.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                User Management
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="px-4 pt-4"> 
+                        <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                            System
+                        </h3>
+                        <a href="activity_feed.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Activity Logs
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <h2 class="text-3xl font-bold text-dark-gray mb-8">Inventory Management</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-blue-100 rounded-full">
+                            <svg class="w-6 h-6 text-bright-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-600">Total Items</p>
+                            <p id="totalItemsCard" class="text-2xl font-bold text-dark-gray">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-red-100 rounded-full">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-600">Out of Stock</p>
+                            <p id="outOfStockCard" class="text-2xl font-bold text-dark-gray">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl card-shadow p-6">
+                
+                <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+                    <h3 class="text-xl font-semibold text-dark-gray">All Inventory Items</h3>
+                    
+                    <div class="flex items-center space-x-3 flex-wrap gap-3">
+                        <div class="w-full sm:w-auto">
+                            <label for="sortDropdown" class="block text-sm font-medium text-gray-700">Sort by</label>
+                            <select id="sortDropdown" class="mt-1 block w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-bright-blue focus:border-bright-blue text-sm">
+                                <option value="name-asc">Item Name (A-Z)</option>
+                                <option value="name-desc">Item Name (Z-A)</option>
+                                <option value="stock-desc">Stock (High to Low)</option>
+                                <option value="stock-asc">Stock (Low to High)</option>
+                                <option value="cat-asc">Category (A-Z)</option>
+                            </select>
+                        </div>
+                        
+                        <button id="openCsvModalBtn" class="bg-emerald hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm self-end">
+                            Import from CSV
+                        </button>
+                        <button id="openItemModalBtn" class="bg-bright-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm flex items-center self-end">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                            Add New Item
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto border rounded-lg">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-medium text-dark-gray">Item Name</th>
+                                <th class="text-left py-3 px-4 font-medium text-dark-gray">Category</th>
+                                <th class="text-left py-3 px-4 font-medium text-dark-gray">Unit</th>
+                                <th class="text-center py-3 px-4 font-medium text-dark-gray">Current Stock</th>
+                                <th class="text-center py-3 px-4 font-medium text-dark-gray">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr>
+                                <td colspan="5" class="text-center py-8 text-gray-500">Loading items...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="itemModal" class="modal fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-40">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6">
+            <h3 id="modalTitle" class="text-lg font-semibold text-dark-gray mb-4">Add New Item</h3>
+            <form id="itemForm">
+                <input type="hidden" id="itemId" name="itemId">
+                <div class="space-y-4">
+                    <div>
+                        <label for="item_name" class="block text-sm font-medium text-gray-700">Item Name</label>
+                        <input type="text" id="item_name" name="item_name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-bright-blue focus:border-bright-blue">
+                    </div>
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                        <input type="text" id="category" name="category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-bright-blue focus:border-bright-blue">
+                    </div>
+                    <div>
+                        <label for="unit" class="block text-sm font-medium text-gray-700">Unit (e.g., pcs, box)</label>
+                        <input type="text" id="unit" name="unit" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-bright-blue focus:border-bright-blue">
+                    </div>
+                    <div>
+                        <label for="current_stock" class="block text-sm font-medium text-gray-700">Current Stock</label>
+                        <input type="number" id="current_stock" name="current_stock" required min="0" value="0" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-bright-blue focus:border-bright-blue">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancelItemModalBtn" class="px-4 py-2 rounded bg-gray-100 text-dark-gray hover:bg-gray-200 transition">Cancel</button>
+                    <button type="submit" id="saveItemBtn" class="px-4 py-2 rounded bg-bright-blue text-white hover:bg-blue-600 transition">Save Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="csvModal" class="modal fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-40">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6">
+            <h3 class="text-lg font-semibold text-dark-gray mb-4">Import from CSV</h3>
+            <form id="csvForm">
+                <div classs="space-y-4">
+                    <div>
+                        <label for="csvFile" class="block text-sm font-medium text-gray-700">CSV File</label>
+                        <input type="file" id="csvFile" name="csvFile" required accept=".csv" class="mt-1 block w-full text-sm text-gray-500
+                            file:mr-4 file:py-2 file:px-4
+                            file:rounded-lg file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-blue-50 file:text-bright-blue
+                            hover:file:bg-blue-100">
+                    </div>
+                    <div class="text-xs text-gray-600 bg-gray-50 p-3 rounded-lg mt-4">
+                        <p class="font-medium mb-1">CSV file must have these exact headers:</p>
+                        <p><code class="font-mono">item_name,category,unit,current_stock</code></p>
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancelCsvModalBtn" class="px-4 py-2 rounded bg-gray-100 text-dark-gray hover:bg-gray-200 transition">Cancel</button>
+                    <button type="submit" id="importCsvBtn" class="px-4 py-2 rounded bg-emerald text-white hover:bg-emerald-600 transition">Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteModal" class="modal fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-40">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
+            <h3 class="text-lg font-semibold text-dark-gray mb-2">Confirm Deletion</h3>
+            <p class="text-gray-600 mb-4">Are you sure you want to permanently delete this item? This action cannot be undone.</p>
+            <div class="flex justify-end space-x-3">
+                <button id="cancelDeleteBtn" class="px-4 py-2 rounded bg-gray-100 text-dark-gray hover:bg-gray-200 transition">Cancel</button>
+                <button id="confirmDeleteBtn" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="statusModal" class="modal fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-40">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
+            <div class="flex items-start">
+                <div id="statusModalIcon" class="mr-3 flex-shrink-0">
+                    </div>
+                <div>
+                    <h3 id="statusModalTitle" class="text-lg font-semibold">Import Status</h3>
+                    <p id="statusModalMessage" class="text-gray-600 mt-2 mb-6">Your message will appear here.</p>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button id="closeStatusModalBtn" class="px-4 py-2 rounded text-white transition">OK</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="profileDropdown.js"></script>
+    <script>
+        // Global variable to store all loaded items
+        let allItems = [];
+        // Store the ID of the item to be deleted
+        let currentDeleteId = null;
+
+        // --- DOM Elements ---
+        const tableBody = document.getElementById('inventoryTableBody');
+        const totalItemsCard = document.getElementById('totalItemsCard');
+        const outOfStockCard = document.getElementById('outOfStockCard');
+        
+        // Modals
+        const itemModal = document.getElementById('itemModal');
+        const csvModal = document.getElementById('csvModal');
+        const deleteModal = document.getElementById('deleteModal');
+        const statusModal = document.getElementById('statusModal');
+
+        // Forms
+        const itemForm = document.getElementById('itemForm');
+        const csvForm = document.getElementById('csvForm');
+        
+        // Modal Titles and Buttons
+        const modalTitle = document.getElementById('modalTitle');
+        const saveItemBtn = document.getElementById('saveItemBtn');
+        const importCsvBtn = document.getElementById('importCsvBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const statusModalTitle = document.getElementById('statusModalTitle'); // <-- ADD THIS
+        const statusModalMessage = document.getElementById('statusModalMessage'); // <-- ADD THIS
+        const statusModalIcon = document.getElementById('statusModalIcon'); // <-- ADD THIS
+        const closeStatusModalBtn = document.getElementById('closeStatusModalBtn');
+
+        // Sort Dropdown
+        const sortDropdown = document.getElementById('sortDropdown');
+
+
+        // --- Data Loading Functions ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            loadItems();
+            loadBadgeCount();
+        });
+
+        async function loadStats() {
+            try {
+                const response = await fetch('get_inventory_stats.php');
+                const stats = await response.json();
+                
+                totalItemsCard.textContent = stats.totalItems || 0;
+                outOfStockCard.textContent = stats.outOfStock || 0;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        async function loadItems() {
+            try {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-gray-500">Loading items...</td></tr>';
+                
+                const response = await fetch('get_inventory_items.php');
+                allItems = await response.json();
+
+                if (allItems.error) {
+                    throw new Error(allItems.error);
+                }
+
+                sortAndRender();
+            } catch (error) {
+                console.error('Error loading items:', error);
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-red-500">Error loading items: ${error.message}</td></tr>`;
+            }
+        }
+
+        async function loadBadgeCount() {
+            let approvalsBadge = document.querySelector('a[href="approvalAdmin.html"] .bg-red-500');
+            if (!approvalsBadge) {
+                approvalsBadge = document.querySelector('a[href="approval.html"] .bg-red-500');
+            }
+            const storedCount = localStorage.getItem('pendingCount') || 0;
+            if (approvalsBadge && storedCount > 0) {
+                approvalsBadge.textContent = storedCount;
+            }
+            try {
+                const response = await fetch('get_pending_count.php');
+                const result = await response.json();
+                const liveCount = result.count;
+                if (approvalsBadge) {
+                    approvalsBadge.textContent = liveCount > 0 ? liveCount : '';
+                }
+                localStorage.setItem('pendingCount', liveCount);
+            } catch (error) {
+                console.error('Error fetching pending count:', error);
+            }
+        }
+        
+        // Sorting Function
+        function sortAndRender() {
+            const sortValue = sortDropdown.value;
+            let sortedItems = [...allItems]; 
+
+            switch(sortValue) {
+                case 'name-asc':
+                    sortedItems.sort((a, b) => a.item_name.localeCompare(b.item_name));
+                    break;
+                case 'name-desc':
+                    sortedItems.sort((a, b) => b.item_name.localeCompare(a.item_name));
+                    break;
+                case 'stock-desc':
+                    sortedItems.sort((a, b) => b.current_stock - a.current_stock);
+                    break;
+                case 'stock-asc':
+                    sortedItems.sort((a, b) => a.current_stock - b.current_stock);
+                    break;
+                case 'cat-asc':
+                    sortedItems.sort((a, b) => (a.category || '').localeCompare(b.category || ''));
+                    break;
+            }
+            
+            renderTable(sortedItems);
+        }
+
+        function renderTable(items) {
+            if (items.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-gray-500">No items found in inventory.</td></tr>';
+                return;
+            }
+
+            tableBody.innerHTML = ''; // Clear table
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100';
+                
+                const stockClass = item.current_stock == 0 ? 'text-red-600 font-medium' : 'text-gray-600';
+                const stockText = item.current_stock == 0 ? 'Out of Stock' : item.current_stock;
+
+                row.innerHTML = `
+                    <td class="text-left py-3 px-4 font-medium text-dark-gray">${item.item_name}</td>
+                    <td class="text-left py-3 px-4 text-gray-600">${item.category || 'N/A'}</td>
+                    <td class="text-left py-3 px-4 text-gray-600">${item.unit}</td>
+                    <td class="text-center py-3 px-4 ${stockClass}">${stockText}</td>
+                    <td class="text-center py-3 px-4">
+                        <button class="edit-btn text-bright-blue hover:text-blue-700 font-medium text-sm p-1"
+                                data-id="${item.id}">
+                            Edit
+                        </button>
+                        <button class="delete-btn text-red-600 hover:text-red-800 font-medium text-sm p-1 ml-2"
+                                data-id="${item.id}">
+                            Delete
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // --- Modal Control Functions ---
+        
+        function openItemModal(item = null) {
+            itemForm.reset(); 
+            if (item) {
+                // Edit Mode
+                modalTitle.textContent = 'Edit Item';
+                document.getElementById('itemId').value = item.id;
+                document.getElementById('item_name').value = item.item_name;
+                document.getElementById('category').value = item.category;
+                document.getElementById('unit').value = item.unit;
+                document.getElementById('current_stock').value = item.current_stock;
+                saveItemBtn.textContent = 'Save Changes';
+            } else {
+                // Add Mode
+                modalTitle.textContent = 'Add New Item';
+                document.getElementById('itemId').value = ''; 
+                saveItemBtn.textContent = 'Save Item';
+            }
+            itemModal.classList.add('flex');
+        }
+
+        function closeItemModal() {
+            itemModal.classList.remove('flex');
+        }
+
+        function openCsvModal() {
+            csvForm.reset();
+            csvModal.classList.add('flex');
+        }
+        
+        function closeCsvModal() {
+            csvModal.classList.remove('flex');
+        }
+
+        function openDeleteModal(id) {
+            currentDeleteId = id;
+            deleteModal.classList.add('flex');
+        }
+
+        function closeDeleteModal() {
+            currentDeleteId = null;
+            deleteModal.classList.remove('flex');
+        }
+
+        function showStatusModal(title, message, isSuccess = true) {
+            statusModalTitle.textContent = title;
+            statusModalMessage.innerHTML = message.replace(/\n/g, '<br>'); // Support newlines
+            
+            if (isSuccess) {
+                statusModalIcon.innerHTML = `
+                    <svg class="w-6 h-6 text-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>`;
+                statusModalTitle.className = "text-lg font-semibold text-emerald";
+                closeStatusModalBtn.className = "px-4 py-2 rounded text-white transition bg-emerald hover:bg-emerald-600";
+            } else {
+                statusModalIcon.innerHTML = `
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>`;
+                statusModalTitle.className = "text-lg font-semibold text-red-600";
+                closeStatusModalBtn.className = "px-4 py-2 rounded text-white transition bg-red-600 hover:bg-red-700";
+            }
+            
+            statusModal.classList.add('flex');
+        }
+
+        function closeStatusModal() {
+            statusModal.classList.remove('flex');
+        }
+
+        // --- Event Listeners ---
+        
+        // Listen for changes on the sort dropdown
+        sortDropdown.addEventListener('change', sortAndRender);
+        
+        // Open Modals
+        document.getElementById('openItemModalBtn').addEventListener('click', () => openItemModal());
+        document.getElementById('openCsvModalBtn').addEventListener('click', openCsvModal);
+
+        // Close Modals
+        document.getElementById('cancelItemModalBtn').addEventListener('click', closeItemModal);
+        document.getElementById('cancelCsvModalBtn').addEventListener('click', closeCsvModal);
+        document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
+        closeStatusModalBtn.addEventListener('click', closeStatusModal);
+
+        // Handle Add/Edit/Delete clicks
+        tableBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('edit-btn')) {
+                const btn = e.target;
+                const itemId = btn.dataset.id;
+                const itemToEdit = allItems.find(item => item.id == itemId); 
+                if (itemToEdit) {
+                    openItemModal(itemToEdit);
+                }
+            }
+            if (e.target.classList.contains('delete-btn')) {
+                openDeleteModal(e.target.dataset.id);
+            }
+        });
+
+        // Handle Add/Edit Form Submit
+        // Handle Add/Edit Form Submit
+        itemForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(itemForm);
+            const itemId = formData.get('itemId');
+            const url = itemId ? 'update_inventory_item.php' : 'add_inventory_item.php';
+            
+            saveItemBtn.disabled = true;
+            saveItemBtn.textContent = 'Saving...';
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    closeItemModal();
+                    
+                    // --- NEW: Show success modal ---
+                    const successMessage = itemId ? 'Item updated successfully.' : 'New item added successfully.';
+                    showStatusModal('Success', successMessage, true);
+                    
+                    loadStats(); 
+                    loadItems(); // This will re-fetch and re-apply the current sort
+                } else {
+                    // --- CHANGED: Replaced alert with modal ---
+                    showStatusModal('Error Saving Item', result.message, false);
+                }
+            } catch (error) {
+                // --- CHANGED: Replaced alert with modal ---
+                showStatusModal('Error Occurred', error.message, false);
+            } finally {
+                saveItemBtn.disabled = false;
+                // Reset text based on mode
+                saveItemBtn.textContent = itemId ? 'Save Changes' : 'Save Item';
+            }
+        });
+
+        // Handle CSV Import Form Submit
+        csvForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(csvForm);
+            if (!formData.get('csvFile') || formData.get('csvFile').size === 0) {
+                // Use new modal for this alert too
+                showStatusModal('Input Error', 'Please select a CSV file to upload.', false);
+                return;
+            }
+            
+            importCsvBtn.disabled = true;
+            importCsvBtn.textContent = 'Importing...';
+
+            try {
+                const response = await fetch('import_inventory_csv.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                // *** CHANGED: Replaced alert() with showStatusModal() ***
+                showStatusModal(
+                    result.success ? 'Import Complete' : 'Import Failed',
+                    result.message,
+                    result.success
+                );
+
+                if (result.success) {
+                    closeCsvModal();
+                    loadStats();
+                    loadItems(); // This will re-fetch and re-apply the current sort
+                }
+            } catch (error) {
+                // *** CHANGED: Replaced alert() with showStatusModal() ***
+                showStatusModal('Error Occurred', 'An error occurred: ' + error.message, false);
+            } finally {
+                importCsvBtn.disabled = false;
+                importCsvBtn.textContent = 'Import';
+            }
+        });
+
+        // Handle Delete Confirmation
+        confirmDeleteBtn.addEventListener('click', async () => {
+            if (!currentDeleteId) return;
+
+            confirmDeleteBtn.disabled = true;
+            confirmDeleteBtn.textContent = 'Deleting...';
+
+            try {
+                const response = await fetch('delete_inventory_item.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: currentDeleteId })
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    closeDeleteModal();
+
+                    // --- NEW: Show success modal ---
+                    showStatusModal('Success', 'Item deleted successfully.', true);
+
+                    loadStats();
+                    loadItems(); // This will re-fetch and re-apply the current sort
+                } else {
+                    // --- CHANGED: Replaced alert with modal ---
+                    showStatusModal('Error Deleting Item', result.message, false);
+                }
+            } catch (error) {
+                // --- CHANGED: Replaced alert with modal ---
+                showStatusModal('Error Occurred', error.message, false);
+            } finally {
+                confirmDeleteBtn.disabled = false;
+                confirmDeleteBtn.textContent = 'Yes, Delete';
+            }
+        });
+    </script>
+</body>
+</html>

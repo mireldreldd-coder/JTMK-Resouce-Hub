@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JTMK Resource Hub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"/>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="intro.css" />
+  </head>
+
+  <style>
+    /* Faded background logos */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1400px; /* space for 2 logos side by side */
+      height: 300px;
+   
+      background-size: 370px, 500px; /* adjust size of logos */
+      opacity: 0.23; /* transparency (lower = more faded) */
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+ 
+  </style>
+  <body>
+    <header>
+  <div class="logo-container">
+    <img src="image/logo_jtmk_2021.png" alt="JTMK Logo" class="logo-img">
+    <span class="logo-text">JTMK Resource Hub</span>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="login.html" class="login-btn">Login</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <section class="hero">
+  <div class="hero-text">
+    
+    <div class="hero-logos" data-aos="fade-down">
+      <img src="image/logo_jtmk_2021.png" alt="JTMK Logo">
+      <img src="image/psisLogo.png" alt="PSIS Logo">
+    </div>
+    
+    <h1 data-aos="fade-up" data-aos-delay="200">Welcome to JTMK Resource Hub</h1>
+    <p data-aos="fade-up" data-aos-delay="300">
+      The official smart inventory and procurement system of <br>Jabatan Teknologi Maklumat & Komunikasi (JTMK)<br>
+      <strong>Politeknik Sultan Idris Shah (PSIS).</strong>
+    </p>
+    <a href="login.html" class="start-btn" data-aos="fade-up" data-aos-delay="400">Get Started</a>
+  </div>
+</section>
+
+    <section id="about" class="about">
+      <div class="about-container" data-aos="fade-up">
+        <div class="about-text">
+          <h2>About the System</h2>
+          <p>
+            JTMK Resource Hub is designed to simplify the management of teaching
+            and learning resources. It provides a structured platform for
+            procurement, approvals, and inventory tracking, ensuring efficiency
+            and transparency across the department.
+          </p>
+        </div>
+        <div class="about-image">
+          <img src="image/psisLogo.png" alt="PSIS Logo" />
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <h2 data-aos="fade-up">Key Features</h2>
+      <div class="feature-list">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+          <i class="bx bxs-store"></i>
+          <h3>Central Procurement</h3>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="bx bxs-cart-add"></i>
+          <h3>Direct Purchase Requests</h3>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+          <i class="bx bxs-box"></i>
+          <h3>Inventory Management</h3>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+          <i class="bx bxs-check-shield"></i>
+          <h3>Approval System</h3>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+            <i class="bx bxs-magic-wand"></i>
+          <h3>Auto-generated Invoices</h3>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+          <i class="bx bxs-bell-ring"></i>
+          <h3>Real-time Notifications</h3>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2 data-aos="fade-up">Contact Us</h2>
+      <p data-aos="fade-up" data-aos-delay="100">
+        Department of Information Technology & Communication (JTMK)
+      </p>
+      <p data-aos="fade-up" data-aos-delay="200">
+        Politeknik Sultan Idris Shah
+      </p>
+      <p data-aos="fade-up" data-aos-delay="300">Email: jtmk@psis.edu.my</p>
+    </section>
+
+    <footer>
+      <p>© 2025 JTMK Resource Hub. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 800, // Animation duration
+        once: true, // Only animate once
+      });
+    </script>
+  </body>
+</html>

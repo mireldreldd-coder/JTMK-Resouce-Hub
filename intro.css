@@ -1,0 +1,297 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* 1. USE THE NEW FONT */
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth; /* Makes anchor links scroll smoothly */
+}
+
+/* Make sure HTML has this for AOS */
+html {
+  overflow-x: hidden;
+}
+
+
+/* Your updated header rule */
+header {
+  width: 100%;
+  padding: 16px 24px; /* <-- UPDATED (matches login page's py-4 px-6) */
+  background: #1E3A8A; 
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* These new rules style the logo just like the login page */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* (space-x-2) */
+}
+
+.logo-img {
+  width: 48px;  /* (w-12) */
+  height: 48px; /* (h-12) */
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 1.5rem; /* (text-2xl) */
+  font-weight: bold;
+  color: white;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  transition: color 0.3s ease;
+  font-weight: 600; /* Made nav links bolder */
+}
+
+header nav ul li a:hover {
+  color: #3B82F6; /* Bright Blue */
+}
+
+header .login-btn {
+  background: #3f84f3;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+header .login-btn:hover {
+  background: #2563EB;
+}
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  background: linear-gradient(to bottom, #3f84f3, #1E3A8A);  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding-top: 60px;
+
+  
+}
+
+.hero h1 {
+  font-size: 3.2rem; /* Made main title larger */
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.1rem; /* Slightly larger p text */
+  margin-bottom: 25px;
+}
+/* ADD THIS NEW BLOCK */
+.start-btn {
+  display: inline-flex; /* Use flex to align text and icon */
+  align-items: center;  /* Vertically center items */
+  gap: 8px;             /* Space between text and icon */
+  
+  /* New Gradient Background */
+  background-image: linear-gradient(to right, #10B981 0%, #059669 100%);
+  color: #fff;
+  padding: 14px 30px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  /* Add a subtle "glow" shadow using the button's color */
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.start-btn:hover {
+  /* Reverse the gradient on hover */
+  background-image: linear-gradient(to right, #059669 0%, #10B981 100%);
+  transform: translateY(-3px); /* Keep the lift */
+  /* Make the glow stronger */
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+/* Style for the icon */
+.start-btn i {
+  font-size: 22px; /* Make icon slightly larger than text */
+  transition: transform 0.3s ease; /* Animate the icon's movement */
+}
+
+/* Animate the icon on hover */
+.start-btn:hover i {
+  transform: translateX(5px); /* Move arrow 5px to the right */
+}
+
+/* STYLES FOR THE NEW LOGOS */
+.hero-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px; /* Space between the two logos */
+  margin-bottom: 40px; /* Space between logos and the H1 title */
+}
+
+.hero-logos img {
+  height: 150px; /* Set a consistent height */
+  width: auto;   /* Let width adjust */
+  object-fit: contain; /* Prevents images from stretching */
+}
+
+/* You can give logos specific heights if they look unbalanced */
+.hero-logos img:first-child {
+  /* JTMK Logo */
+  height: 150px; 
+}
+.hero-logos img:last-child {
+  /* PSIS Logo */
+  height: 130px; 
+}
+
+/* 3. NEW 2-COLUMN 'ABOUT' SECTION */
+.about {
+  padding: 100px 50px;
+  background: #F9FAFB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 2/3 text, 1/3 image */
+  gap: 60px;
+  max-width: 1100px;
+  align-items: center;
+}
+
+.about-text h2 {
+  font-size: 28px;
+  color: #1E3A8A;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  font-size: 16px;
+  color: #374151;
+  line-height: 1.7;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 300px; /* Control logo size */
+  opacity: 0.7;
+}
+
+/* 4. NEW 'FEATURES' GRID SECTION */
+.features {
+  padding: 100px 50px;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 28px;
+  color: #1E3A8A;
+  margin-bottom: 40px;
+}
+
+.feature-list {
+  display: grid;
+  /* Create 3 columns, but let them auto-fit and be min 250px */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.feature-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 40px 30px;
+  font-size: 15px;
+  color: #111827;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px); /* Lift card on hover */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Style for the new icons */
+.feature-card i {
+  font-size: 3rem; /* 48px */
+  color: #1E3A8A;
+  margin-bottom: 20px;
+}
+
+/* Style for the new headings */
+.feature-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Contact Section */
+.contact {
+  padding: 100px 50px;
+  text-align: center;
+  background: #F9FAFB;
+}
+
+.contact h2 {
+  font-size: 28px;
+  color: #1E3A8A;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  font-size: 16px;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+
+
+.about-image img {
+  width: 100%;
+  max-width: 300px; /* Control logo size */
+  opacity: 0.7;
+
+  /* ADD THESE TWO LINES 👇 */
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* ADD THIS NEW RULE right after the one above 👇 */
+.about-container:hover .about-image img {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+  background: #1E3A8A;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+}

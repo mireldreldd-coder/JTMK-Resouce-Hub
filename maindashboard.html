@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JTMK Resource Hub - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#1E3A8A',
+                        'bright-blue': '#3B82F6',
+                        'emerald': '#10B981',
+                        'light-gray': '#F9FAFB',
+                        'dark-gray': '#111827'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray min-h-screen">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="flex justify-between items-center px-6 py-4">
+            <div class="flex items-center space-x-2 logo">
+                <img src="image/logo_jtmk_2021.png" alt="JTMK Logo" class="h-8 w-8 object-contain"/>
+                <span class="text-2xl font-bold text-navy">JTMK Resource Hub</span>
+            </div>
+            <div class="flex items-center space-x-4">
+    <div class="relative">
+  <button onclick="toggleProfileDropdown()" 
+          class="flex items-center space-x-2 hover:bg-gray-50 rounded-lg px-3 py-2 transition-colors">
+      <div class="w-8 h-8 bg-bright-blue rounded-full flex items-center justify-center">
+          <span id="profileInitials" class="text-white text-sm font-medium">AD</span>
+      </div>
+      <span id="profileName" class="text-dark-gray font-medium">Admin</span>
+      <svg id="profileArrow" class="w-4 h-4 text-gray-500 transition-transform" 
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M19 9l-7 7-7-7"></path>
+      </svg>
+  </button>
+
+  <div id="profileDropdown" 
+       class="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 hidden">
+      <div class="px-4 py-3 border-b border-gray-100">
+          <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-bright-blue rounded-full flex items-center justify-center">
+                  <span class="text-white text-sm font-medium" id="profileDropdownInitials">AD</span>
+              </div>
+              <div>
+                  <p class="text-sm font-medium text-dark-gray" id="profileDropdownName">Admin User</p>
+                  <p class="text-xs text-gray-500" id="profileDropdownEmail">admin@jtmk.com</p>
+              </div>
+          </div>
+      </div>
+      <div class="py-2">
+          <a href="#" onclick="openProfileModal()" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+              <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              My Profile
+          </a>
+          <a href="#" id="logoutButton" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+              <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              Sign Out
+          </a>
+      </div>
+  </div>
+</div>
+
+</div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <aside class="w-64 bg-white shadow-sm min-h-screen">
+            <nav class="mt-6">
+                <div class="space-y-2">
+                    <div class="px-4">
+                        <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                            Overview
+                        </h3>
+                        <a href="maindashboard.html" class="flex items-center px-4 py-3 text-bright-blue bg-blue-50 rounded-lg font-medium">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path></svg>
+                            Dashboard
+                        </a>
+                    </div>
+
+                    <div class="px-4 pt-4"> 
+                        <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                            Management
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="approvalAdmin.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Approvals
+                                <span id="pendingCountBadge" class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full"></span>
+                            </a>
+                            <a href="inventoryAdmin.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                Inventory
+                            </a>
+                            <a href="userManagement.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                User Management
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="px-4 pt-4"> 
+                        <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                            System
+                        </h3>
+                        <a href="activity_feed.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Activity Logs
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-dark-gray mb-1">Welcome, <span id="welcomeName">Admin</span>!</h2>
+                    <p class="text-gray-600">You have <span id="pendingCountText" class="font-bold text-yellow-600">0 pending requests</span> to be review.</p>
+                </div>
+                <a href="approvalAdmin.html" class="bg-bright-blue hover:bg-blue-600 text-white px-5 py-3 rounded-lg font-medium transition-colors flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Review Approvals
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex items-center space-x-4">
+                    <div class="bg-blue-100 text-bright-blue p-3 rounded-full">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Total Users</sP>
+                        <p id="totalUsersCard" class="text-3xl font-bold text-dark-gray">0</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex items-center space-x-4">
+                    <div class="bg-yellow-100 text-yellow-600 p-3 rounded-full">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Total Pending</p>
+                        <p id="totalPendingCard" class="text-3xl font-bold text-yellow-600">0</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex items-center space-x-4">
+                    <div class="bg-green-100 text-emerald p-3 rounded-full">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Approved (This Month)</p>
+                        <p id="approvedMonthCard" class="text-3xl font-bold text-emerald">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                <div class="flex justify-between items-center p-6 border-b border-gray-200">
+                    <h3 class="text-xl font-semibold text-dark-gray">Recent Requests (All Users)</h3>
+                    <a href="approvalAdmin.html" class="text-sm font-medium text-bright-blue hover:underline">View All Requests</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left py-3 px-6 font-medium text-dark-gray">Request ID</th>
+                                <th class="text-left py-3 px-6 font-medium text-dark-gray">Requester</th>
+                                <th class="text-left py-3 px-6 font-medium text-dark-gray">Items</th>
+                                <th class="text-right py-3 px-6 font-medium text-dark-gray">Total Cost</th>
+                                <th class="text-center py-3 px-6 font-medium text-dark-gray">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentRequestsTable">
+                            <tr>
+                                <td colspan="3" class="text-center py-6 text-gray-500" id="recentEmptyState">
+                                    No recent requests.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="logoutModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-sm p-6">
+                <h3 class="text-lg font-semibold text-dark-gray mb-2">Logout</h3>
+                <p class="text-gray-600 mb-6">Are you sure you want to log out?</p>
+            <div class="flex justify-end space-x-3">
+                <button id="cancelLogout" class="px-4 py-2 rounded bg-gray-100 text-dark-gray hover:bg-gray-200 transition">Cancel</button>
+                <button id="confirmLogout" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+    <script src="profileDropdown.js"></script>
+
+    <script>
+        // --- Helper Functions (for table) ---
+        function formatRequestId(id) {
+            const paddedId = String(id).padStart(4, '0');
+            return `REQ-${paddedId}`;
+        }
+        function formatItemName(nameStr) {
+            if (!nameStr) return 'N/A';
+            const words = nameStr.split(' ');
+            const capitalizedWords = words.map((word, index) => (word.length <= 2 && index > 0) ? word : word.charAt(0).toUpperCase() + word.slice(1));
+            return capitalizedWords.join(' ');
+        }
+        function getStatusBadge(status) {
+            const statusClasses = {
+                Pending: 'bg-yellow-100 text-yellow-800',
+                Approved: 'bg-green-100 text-green-800',
+                Rejected: 'bg-red-100 text-red-800'
+            };
+            const cssClass = statusClasses[status] || 'bg-gray-100 text-gray-800';
+            return `<span class="${cssClass} px-3 py-1 rounded-full text-sm font-medium">${status}</span>`;
+        }
+
+        // --- Profile & Nav Logic ---
+        function setProfileInfo() {
+            const userRole = localStorage.getItem('userRole');
+            const dashboardLink = document.getElementById('dashboardLink');
+            if (dashboardLink) {
+                dashboardLink.href = "maindashboard.html";
+            }
+            
+            const profileNameSpan = document.getElementById('profileName');
+            const profileInitialsSpan = document.getElementById('profileInitials');
+            const dropdownName = document.getElementById('profileDropdownName');
+            const dropdownEmail = document.getElementById('profileDropdownEmail');
+            const dropdownInitials = document.getElementById('profileDropdownInitials'); 
+            const welcomeName = document.getElementById('welcomeName');
+            
+            const storedName = localStorage.getItem('profileName');
+            const storedEmail = localStorage.getItem('profileEmail'); 
+            
+            if (storedName) {
+                profileNameSpan.textContent = storedName;
+                if (dropdownName) dropdownName.textContent = storedName;
+                if (welcomeName) welcomeName.textContent = storedName; 
+            }
+            if (storedEmail && dropdownEmail) {
+                dropdownEmail.textContent = storedEmail;
+            }
+        }
+
+        // --- NEW: Simplified Badge & Banner Update Function ---
+        // This function NO LONGER fetches data. It just updates the HTML.
+        function updateSidebarAndBanner(liveCount) {
+            // 1. Update Sidebar Badge
+            let approvalsBadge = document.querySelector('a[href="approvalAdmin.html"] .bg-red-500');
+            if (approvalsBadge) {
+                approvalsBadge.textContent = liveCount > 0 ? liveCount : '';
+            }
+            
+            // 2. Update localStorage
+            localStorage.setItem('pendingCount', liveCount);
+
+            // 3. Update Welcome Banner Text
+            const pendingText = document.getElementById('pendingCountText');
+            if (pendingText) {
+                pendingText.textContent = `${liveCount} pending request${liveCount !== 1 ? 's' : ''}`;
+            }
+        }
+
+        // --- UPDATED: Dashboard Stats Logic ---
+        // This function now fetches all stats AND calls the update function.
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch('get_admin_dashboard_stats.php');
+                if (!response.ok) {
+                    throw new Error('Could not fetch dashboard stats.');
+                }
+                const stats = await response.json();
+
+                // Update the cards
+                document.getElementById('totalUsersCard').textContent = stats.total_users;
+                document.getElementById('totalPendingCard').textContent = stats.total_pending;
+                document.getElementById('approvedMonthCard').textContent = stats.approved_monthly;
+
+                // --- THIS IS THE FIX ---
+                // Now, call the update function using the stats we just fetched
+                updateSidebarAndBanner(stats.total_pending);
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('totalUsersCard').textContent = 'E';
+                document.getElementById('totalPendingCard').textContent = 'E';
+                document.getElementById('approvedMonthCard').textContent = 'E';
+                
+                // Also update the banner on error
+                updateSidebarAndBanner(0); // Pass 0 on error
+            }
+        }
+
+        // --- Recent Requests Logic ---
+        async function loadRecentRequests() {
+            try {
+                const response = await fetch('get_admin_requests.php');
+                if (!response.ok) {
+                    throw new Error('Could not fetch recent requests.');
+                }
+                const allRequests = await response.json();
+                const recentRequests = allRequests.slice(0, 5); // Get first 5
+                
+                renderRecentRequestsTable(recentRequests);
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('recentEmptyState').textContent = 'Error loading requests.';
+            }
+        }
+
+        function renderRecentRequestsTable(requests) {
+            const tableBody = document.getElementById('recentRequestsTable');
+            const emptyState = document.getElementById('recentEmptyState');
+
+            if (requests.length === 0) {
+                tableBody.innerHTML = ''; 
+                tableBody.appendChild(emptyState);
+                return;
+            }
+
+            tableBody.innerHTML = ''; // Clear empty state
+            
+            requests.forEach(req => {
+                const itemCount = req.items.length;
+                let itemSummary = req.items.length > 0 ? formatItemName(req.items[0].item_name) : 'N/A';
+                if (itemCount > 1) {
+                    itemSummary += ` + ${itemCount - 1} other(s)`;
+                }
+
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="py-4 px-6">
+                        <div class="font-medium text-dark-gray">${formatRequestId(req.request_id)}</div>
+                        <div class="text-sm text-gray-500">${new Date(req.request_date).toLocaleDateString('en-CA')}</div>
+                    </td>
+                    <td class="py-4 px-6">${req.requester_name}</td>
+                    <td class="py-4 px-6">${itemSummary}</td>
+                    <td class="py-4 px-6 text-right font-medium text-gray-700">RM ${parseFloat(req.total_cost).toFixed(2)}</td>
+                    <td class="py-4 px-6 text-center">${getStatusBadge(req.request_status)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+
+        // --- Logout Modal Logic ---
+        function attachLogoutEvents() {
+            const logoutModal = document.getElementById('logoutModal');
+            const logoutButton = document.getElementById('logoutButton');
+            const cancelLogout = document.getElementById('cancelLogout');
+            const confirmLogout = document.getElementById('confirmLogout');
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    if (logoutModal) logoutModal.classList.remove('hidden');
+                });
+            }
+            if (cancelLogout) {
+                cancelLogout.addEventListener('click', () => {
+                    if (logoutModal) logoutModal.classList.add('hidden');
+                });
+            }
+            if (confirmLogout) {
+                confirmLogout.addEventListener('click', () => {
+                    localStorage.clear(); // Clear all localStorage
+                    window.location.href = 'login.html';
+                });
+            }
+        }
+        
+        // This is a placeholder function, update as needed
+        function openProfileModal() {
+            alert('Open My Profile modal or page here.');
+        }
+
+        // --- Run Everything on Page Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            setProfileInfo();
+            // We no longer call updateSidebarBadge() here on its own.
+            loadDashboardStats(); // This function now handles stats, the badge, AND the banner.
+            loadRecentRequests();
+            attachLogoutEvents();
+        });
+    </script>
+</body>
+</html>

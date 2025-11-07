@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JTMK Resource Hub</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#1E3A8A',
+                        'bright-blue': '#3B82F6',
+                        'emerald': '#10B981',
+                        'light-gray': '#F9FAFB',
+                        'dark-gray': '#111827'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(20px); }
+        }
+        .signature-font {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            color: #1E3A8A;
+        }
+        .signature-font {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            color: #1E3A8A;
+        }
+
+        /* ADD THIS @media BLOCK FOR PRINTING */
+        @media print {
+            /* Hide everything except the modal content */
+            body * {
+                visibility: hidden;
+            }
+            #requestModal, #modalContent, #modalContent * {
+                visibility: visible;
+            }
+            #requestModal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                border: none;
+                background: white;
+                padding: 0;
+            }
+            /* Hide the modal's buttons when printing */
+            #modalPrintBtn, #modalDownloadBtn, #closeModalBtn {
+                display: none;
+            }
+            .grid-cols-3 { /* Ensure columns stack in print */
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body class="bg-light-gray min-h-screen">
+    <!-- Top Navigation -->
+     <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="flex justify-between items-center px-6 py-4">
+            <div class="flex items-center space-x-2 logo">
+                <img src="image/logo_jtmk_2021.png" alt="JTMK Logo" class="h-8 w-8 object-contain"/>
+                <span class="text-2xl font-bold text-navy">JTMK Resource Hub</span>
+            </div>
+            <div class="flex items-center space-x-4">
+    <!-- ✅ PROFILE DROPDOWN (REUSABLE TEMPLATE) -->
+<div class="relative">
+  <button onclick="toggleProfileDropdown()" 
+          class="flex items-center space-x-2 hover:bg-gray-50 rounded-lg px-3 py-2 transition-colors">
+      <div class="w-8 h-8 bg-bright-blue rounded-full flex items-center justify-center">
+          <span id="profileInitials" class="text-white text-sm font-medium">AD</span>
+      </div>
+      <span id="profileName" class="text-dark-gray font-medium">Admin</span>
+      <svg id="profileArrow" class="w-4 h-4 text-gray-500 transition-transform" 
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M19 9l-7 7-7-7"></path>
+      </svg>
+  </button>
+
+  <div id="profileDropdown" 
+       class="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 hidden">
+      <div class="px-4 py-3 border-b border-gray-100">
+          <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-bright-blue rounded-full flex items-center justify-center">
+                  <span class="text-white text-sm font-medium" id="profileDropdownInitials">AD</span>
+              </div>
+              <div>
+                  <p class="text-sm font-medium text-dark-gray" id="profileDropdownName">Admin User</p>
+                  <p class="text-xs text-gray-500" id="profileDropdownEmail">admin@jtmk.com</p>
+              </div>
+          </div>
+      </div>
+      <div class="py-2">
+          <a href="#" onclick="openProfileModal()" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+              <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              My Profile
+          </a>
+          <a href="login.html" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+              <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              Sign Out
+          </a>
+      </div>
+  </div>
+</div>
+
+</div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-sm min-h-screen">
+        <nav class="mt-6">
+        <div class="space-y-2">
+
+            <div class="px-4">
+                <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                    Overview
+                </h3>
+                <a href="userDashboard.html" id="dashboardLink" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path></svg>
+                    Dashboard
+                </a>
+            </div>
+
+            <div class="px-4 pt-4"> <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                    Request
+                </h3>
+                <div class="space-y-2">
+                    <a href="procurement.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        Central Purchase
+                    </a>
+                    <a href="directprocurement.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        Direct Purchase
+                    </a>
+                    <a href="inventoryUser.html" class="flex items-center px-4 py-3 text-dark-gray hover:bg-gray-50 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        Inventory
+                    </a>
+                </div>
+            </div>
+
+            <div class="px-4 pt-4"> <h3 class="mb-2 px-4 text-xs font-medium text-gray-500 uppercase">
+                    Status
+                </h3>
+                <a href="approval.html" class="flex items-center px-4 py-3 text-bright-blue bg-blue-50 rounded-lg font-medium">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Approvals
+                    <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full"></span>
+                </a>
+            </div>
+
+            </div>
+        </nav>
+    </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-dark-gray mb-2">My Request Status</h2>
+                <p class="text-gray-600">Track the progress of your procurement requests</p>
+            </div>
+
+            <!-- Status Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Pending Card -->
+                <div class="bg-yellow-50 rounded-xl p-6 card-shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-yellow-800 text-sm font-medium">Pending</p>
+                            <h3 id="pendingCount" class="text-2xl font-bold text-yellow-900 mt-1">0</h3>
+                        </div>
+                        <div class="bg-yellow-100 rounded-full p-3">
+                            <svg class="w-6 h-6 text-yellow-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Approved Card -->
+                <div class="bg-green-50 rounded-xl p-6 card-shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-green-800 text-sm font-medium">Approved</p>
+                            <h3 id="approvedCount" class="text-2xl font-bold text-green-900 mt-1">0</h3>
+                        </div>
+                        <div class="bg-green-100 rounded-full p-3">
+                            <svg class="w-6 h-6 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rejected Card -->
+                <div class="bg-red-50 rounded-xl p-6 card-shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-red-800 text-sm font-medium">Rejected</p>
+                            <h3 id="rejectedCount" class="text-2xl font-bold text-red-900 mt-1">0</h3>
+                        </div>
+                        <div class="bg-red-100 rounded-full p-3">
+                            <svg class="w-6 h-6 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requests Table -->
+            <div class="bg-white rounded-xl card-shadow">
+                <!-- Table Header -->
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-dark-gray">Request History</h3>
+                        <div class="flex space-x-4">
+                            <select id="statusFilter" class="border rounded-lg px-3 py-2 text-sm">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <select id="typeFilter" class="border rounded-lg px-3 py-2 text-sm">
+                                <option value="all">All Types</option>
+                                <option value="central">Central Supplier</option>
+                                <option value="direct">Direct Purchase</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="text-left py-3 px-6 font-medium text-dark-gray">Request ID</th>
+                                <th class="text-left py-3 px-6 font-medium text-dark-gray">Type</th>
+                                <th class="text-left py-3 px-6 font-medium text-dark-gray">Item(s)</th>
+                                <th class="text-center py-3 px-6 font-medium text-dark-gray">Date</th>
+                                <th class="text-center py-3 px-6 font-medium text-dark-gray">Status</th>
+                                <th class="text-center py-3 px-6 font-medium text-dark-gray">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+                            <div id="requestModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-3xl p-8 relative">
+        
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-dark-gray">Request Details</h3>
+            <div class="flex items-center space-x-2">
+                
+                <button id="modalPrintBtn"
+                        class="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
+                        title="Print">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm-3-14V5a2 2 0 012-2h6a2 2 0 012 2v2"></path></svg>
+                </button>
+                
+                <button id="modalDownloadBtn"
+                        class="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
+                        title="Download PDF">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                </button>
+                
+                <button id="closeModalBtn" 
+                        class="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
+                        title="Close">
+                    <span class="text-xl font-bold">&times;</span>
+                </button>
+            </div>
+        </div>
+        
+        <div id="modalContent"></div>
+        
+        <div id="modalActions" class="mt-6 flex justify-end space-x-3"></div>
+        <div id="invoiceViewer" class="mt-6 hidden"></div>
+    </div>
+</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+       <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-sm p-6">
+            <h3 class="text-lg font-semibold text-dark-gray mb-2">Logout</h3>
+            <p class="text-gray-600 mb-6">Are you sure you want to log out?</p>
+            <div class="flex justify-end space-x-3">
+                <button id="cancelLogout" class="px-4 py-2 rounded bg-gray-100 text-dark-gray hover:bg-gray-200 transition">No</button>
+                <button id="confirmLogout" class="px-4 py-2 rounded bg-bright-blue text-white hover:bg-blue-600 transition">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pdf-report-content" 
+         class="" 
+         style="position: absolute; left: -9999px; width: 1024px; padding: 40px; background: white; color: #000;">
+    </div>
+
+    <script src="script.js"></script>
+    <script src="profileDropdown.js"></script>
+
+    <script>
+        // --- Helper Functions (Copied from other page) ---
+        function formatRequestId(id) {
+            const paddedId = String(id).padStart(4, '0');
+            return `REQ-${paddedId}`;
+        }
+        function formatItemType(typeStr) {
+            if (!typeStr) return 'N/A';
+            const words = typeStr.split('-');
+            const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+            return capitalizedWords.join(' ');
+        }
+        function formatItemName(nameStr) {
+            if (!nameStr) return 'N/A';
+            const words = nameStr.split(' ');
+            const capitalizedWords = words.map((word, index) => (word.length <= 2 && index > 0) ? word : word.charAt(0).toUpperCase() + word.slice(1));
+            return capitalizedWords.join(' ');
+        }
+        
+        // --- Main Data Logic ---
+        let allUserRequests = []; // This will hold our fetched data (carts)
+
+        // DOM elements
+        const requestModal = document.getElementById('requestModal');
+        const modalContent = document.getElementById('modalContent');
+        const statusFilter = document.getElementById('statusFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const tableBody = document.getElementById('requestsTable');
+
+        // Fetch requests from the server
+        async function fetchUserRequests() {
+            try {
+                const response = await fetch('get_user_requests.php'); // Calls new PHP
+                if (!response.ok) {
+                    throw new Error('Failed to fetch requests.');
+                }
+                allUserRequests = await response.json();
+                
+                // Save pending count to localStorage
+                const pendingCount = allUserRequests.filter(r => r.request_status === 'Pending').length;
+                localStorage.setItem('pendingCount', pendingCount);
+                
+                renderPage();
+            } catch (error) {
+                console.error(error);
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4">Error loading requests.</td></tr>`;
+            }
+        }
+
+        // Update status counts on the dashboard cards
+        function updateStatusCounts() {
+            document.getElementById('pendingCount').textContent = allUserRequests.filter(r => r.request_status === 'Pending').length;
+            document.getElementById('approvedCount').textContent = allUserRequests.filter(r => r.request_status === 'Approved').length;
+            document.getElementById('rejectedCount').textContent = allUserRequests.filter(r => r.request_status === 'Rejected').length;
+            
+            // Update sidebar badge
+            const pending = allUserRequests.filter(r => r.request_status === 'Pending').length;
+            const approvalsBadge = document.querySelector('a[href="approval.html"] .bg-red-500');
+            if (approvalsBadge) {
+                approvalsBadge.textContent = pending > 0 ? pending : '';
+            }
+        }
+
+        // Get status badge HTML
+        function getStatusBadge(status) {
+            const statusClasses = {
+                Pending: 'bg-yellow-100 text-yellow-800',
+                Approved: 'bg-green-100 text-green-800',
+                Rejected: 'bg-red-100 text-red-800'
+            };
+            const cssClass = statusClasses[status] || 'bg-gray-100 text-gray-800';
+            return `<span class="${cssClass} px-3 py-1 rounded-full text-sm font-medium">${status}</span>`;
+        }
+
+        // Render requests table
+        function renderRequests(filteredRequests) {
+            if (filteredRequests.length === 0) {
+                 tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-gray-500">No requests found.</td></tr>`;
+                 return;
+            }
+
+            tableBody.innerHTML = filteredRequests.map(req => {
+                const reqDate = new Date(req.request_date).toLocaleDateString('en-CA');
+                const itemCount = req.items.length;
+                
+                // --- NEW ---
+                // Check if the item is newly approved/rejected and unseen
+                const isNew = (req.request_status !== 'Pending' && req.is_seen_by_user == 0);
+                
+                // Get the status badge
+                let statusHTML = getStatusBadge(req.request_status);
+
+                // If it's new, add a "New" indicator
+                if (isNew) {
+                    statusHTML += ` <span class="ml-2 bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-full">New</span>`;
+                }
+                // --- END NEW ---
+
+                let itemSummary = req.items.length > 0 ? formatItemName(req.items[0].item_name) : 'N/A';
+                if (itemCount > 1) {
+                    itemSummary += ` + ${itemCount - 1} other(s)`;
+                }
+
+                // --- NEW: Add a data-seen attribute to the row ---
+                return `
+                <tr id="req-row-${req.request_id}" 
+                    class="border-b border-gray-200 hover:bg-gray-50 ${isNew ? 'bg-blue-50' : ''}" 
+                    data-seen="${req.is_seen_by_user}">
+                    
+                    <td class="py-4 px-6">
+                        <div class="font-medium">${formatRequestId(req.request_id)}</div>
+                        <div class="text-sm text-gray-500">${req.request_type}</div>
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="font-medium">${itemSummary}</div>
+                        <div class="text-sm text-gray-500">(${itemCount} item${itemCount !== 1 ? 's' : ''})</div>
+                    </td>
+                    <td class="py-4 px-6 text-emerald-600 font-medium">RM ${parseFloat(req.total_cost).toFixed(2)}</td>
+                    <td class="py-4 px-6 text-center">${reqDate}</td>
+                    <td class="py-4 px-6 text-center">${statusHTML}</td> <td class="py-4 px-6 text-center">
+                        <button onclick="openRequestModal(${req.request_id})"
+                                class="text-blue-600 hover:text-blue-800">
+                            View Details
+                        </button>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        // Filter handling
+        statusFilter.addEventListener('change', renderPage);
+        typeFilter.addEventListener('change', renderPage);
+
+        // Replace your old function with this one
+        function filterRequests() {
+            const statusValue = statusFilter.value;
+            const typeValue = typeFilter.value; // Get the type value
+            
+            let filteredRequests = allUserRequests;
+            
+            // 1. Filter by status
+            if (statusValue !== 'all') {
+                filteredRequests = filteredRequests.filter(req => req.request_status.toLowerCase() === statusValue);
+            }
+            
+            // 2. Filter by type
+            // (Note: This checks the lowercase dropdown value against the capitalized data value)
+            if (typeValue === 'central') {
+                filteredRequests = filteredRequests.filter(req => req.request_type === 'Central');
+            } else if (typeValue === 'direct') {
+                filteredRequests = filteredRequests.filter(req => req.request_type === 'Direct');
+            }
+            // If typeValue is 'all', it correctly skips this filter.
+
+            renderRequests(filteredRequests);
+        }
+        
+        // --- Modal logic (HEAVILY REVISED) ---
+        document.getElementById('closeModalBtn').onclick = closeModal;
+        requestModal.onclick = function(e) { if (e.target === requestModal) closeModal(); };
+
+            // --- REVISED openRequestModal FUNCTION ---
+        function openRequestModal(requestId) {
+            const req = allUserRequests.find(r => r.request_id == requestId);
+            if (!req) return;
+
+            // --- 1. "MARK AS SEEN" LOGIC ---
+            const row = document.getElementById(`req-row-${req.request_id}`);
+            if (row && row.dataset.seen == "0") {
+                fetch('jtmkreshub/mark_request_seen.php?id=' + req.request_id)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            req.is_seen_by_user = 1; 
+                            row.dataset.seen = "1";
+                            row.classList.remove('bg-blue-50');
+                            const newBadge = row.querySelector('.bg-blue-500');
+                            if (newBadge) newBadge.remove();
+                        }
+                    })
+                    .catch(console.error);
+            }
+            
+            const reqDate = new Date(req.request_date).toLocaleDateString('en-GB');
+            const formattedReqId = formatRequestId(req.request_id); // Get formatted ID
+            
+            // --- 2. BUILD THE ITEMS TABLE ---
+            const itemsTableHTML = req.items.map(item => {
+                let linksHTML = '';
+                if (req.request_type === 'Direct') {
+                    const productLink = item.product_link ? `<a href="${item.product_link}" target="_blank" class="text-blue-600 hover:underline">View Product</a>` : 'N/A';
+                    const attachmentLink = item.attachment_path ? `<a href="${item.attachment_path}" target="_blank" class="text-blue-600 hover:underline">View Attachment</a>` : 'N/A';
+                    
+                    linksHTML = `
+                        <tr class="border-b">
+                            <td colspan="4" class="py-2 text-sm">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div><strong>Product Link:</strong> ${productLink}</div>
+                                    <div><strong>Attachment:</strong> ${attachmentLink}</div>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                return `
+                    <tr class="border-b">
+                        <td class="py-2">${formatItemName(item.item_name)}</td>
+                        <td class="py-2 text-center">${item.quantity}</td>
+                        <td class="py-2 text-right">RM ${parseFloat(item.price_per_unit).toFixed(2)}</td>
+                        <td class="py-2 text-right">RM ${(item.quantity * item.price_per_unit).toFixed(2)}</td>
+                    </tr>
+                    ${linksHTML}
+                `;
+            }).join('');
+
+            // --- 3. POPULATE MODAL CONTENT ---
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Request ID</p>
+                            <p class="font-medium">${formattedReqId}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Request Type</p>
+                            <p class="font-medium">${req.request_type}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Date Submitted</p>
+                            <p class="font-medium">${reqDate}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Status</p>
+                        <div class="mt-1">${getStatusBadge(req.request_status)}</div>
+                    </div>
+
+                    ${req.admin_remark ? `
+                    <div>
+                        <p class="text-sm text-gray-600">Admin Remark</p>
+                        <div class="mt-1 p-3 bg-gray-50 rounded-lg text-sm text-gray-700">${req.admin_remark}</div>
+                    </div>
+                    ` : ''}
+
+                    <div class="mt-6">
+                        <h4 class="font-medium mb-4">Requested Items</h4>
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="text-left py-2 px-3">Item</th>
+                                    <th class="text-center py-2 px-3">Qty</th>
+                                    <th class="text-right py-2 px-3">Price/Unit</th>
+                                    <th class="text-right py-2 px-3">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>${itemsTableHTML}</tbody>
+                            <tfoot class="border-t-2">
+                                <tr>
+                                    <td colspan="3" class="pt-2 text-right font-bold">Total Estimated Cost:</td>
+                                    <td class="pt-2 text-right font-bold text-emerald-600">RM ${parseFloat(req.total_cost).toFixed(2)}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            // --- 4. (NEW) ASSIGN BUTTON ACTIONS ---
+            // We find the buttons *after* the modal is populated, just in case.
+            document.getElementById('modalPrintBtn').onclick = printModal;
+            document.getElementById('modalDownloadBtn').onclick = () => downloadPdf(req);
+            
+            requestModal.classList.remove('hidden');
+        }
+
+        function printModal() {
+            window.print(); // Triggers the @media print styles
+        }
+
+        function downloadPdf(req) { // <-- This function signature is correct
+            const { jsPDF } = window.jspdf;
+            const reportContent = document.getElementById('pdf-report-content');
+            
+            // --- 1. Build the Report HTML ---
+            const formattedReqId = formatRequestId(req.request_id);
+            const reqDate = new Date(req.request_date).toLocaleDateString('en-GB');
+            const totalCost = parseFloat(req.total_cost).toFixed(2);
+            
+            const itemsHtml = req.items.map(item => `
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px;">${formatItemName(item.item_name)}</td>
+                    <td style="padding: 8px; text-align: center;">${item.quantity}</td>
+                    <td style="padding: 8px; text-align: right;">RM ${parseFloat(item.price_per_unit).toFixed(2)}</td>
+                    <td style="padding: 8px; text-align: right;">RM ${(item.quantity * item.price_per_unit).toFixed(2)}</td>
+                </tr>
+            `).join('');
+
+            const reportHTML = `
+                <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+                    
+                    <div style="padding-bottom: 10px; border-bottom: 2px solid #1E3A8A; margin-bottom: 20px;">
+                        <h2 style="color: #1E3A8A; margin: 0; padding: 0;">JTMK Resource Hub</h2>
+                        <h3 style="margin: 0; padding: 0; font-weight: normal; color: #333;">Procurement Request Report</h3>
+                    </div>
+
+                    <table style="width: 100%; margin-bottom: 20px; font-size: 14px;">
+                        <tr>
+                            <td style="padding-right: 20px;"><strong>Request ID:</strong> ${formattedReqId}</td>
+                            <td style="padding-right: 20px;"><strong>Request Type:</strong> ${req.request_type}</td>
+                            <td><strong>Date Submitted:</strong> ${reqDate}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Status:</strong> ${req.request_status}</td>
+                        </tr>
+                    </table>
+
+                    ${req.admin_remark ? `
+                    <div style="margin-bottom: 20px;">
+                        <strong style="font-size: 14px;">Admin Remark:</strong>
+                        <div style="background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; padding: 10px; font-size: 14px; margin-top: 5px;">
+                            ${req.admin_remark}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 10px; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Requested Items</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                            <thead style="background: #f1f1f1; text-align: left;">
+                                <tr style="background: #f1f1f1; text-align: left;">
+                                    <th style="padding: 8px;">Item Name</th>
+                                    <th style="padding: 8px; text-align: center;">Quantity</th>
+                                    <th style="padding: 8px; text-align: right;">Price/Unit</th>
+                                    <th style="padding: 8px; text-align: right;">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${itemsHtml}
+                            </tbody>
+                            <tfoot>
+                                <tr style="border-top: 2px solid #555;">
+                                    <td colspan="3" style="padding: 10px; text-align: right; font-weight: bold; font-size: 16px;">Total Estimated Cost:</td>
+                                    <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 16px; color: #10B981;">RM ${totalCost}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            // --- 2. Set HTML and Get Buttons ---
+            reportContent.innerHTML = reportHTML;
+            
+            const printBtn = document.getElementById('modalPrintBtn');
+            const downloadBtn = document.getElementById('modalDownloadBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            printBtn.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            closeBtn.style.display = 'none';
+
+            // --- 3. Generate the PDF ---
+            
+            // Add a short delay to let the browser render the hidden div
+            setTimeout(() => {
+                html2canvas(reportContent, {
+                    scale: 2
+                }).then(canvas => {
+                    
+                    // --- FIX 1: Change format from image/png to image/jpeg ---
+                    const imgData = canvas.toDataURL('image/jpeg', 0.9); // 0.9 is quality
+                    
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = pdf.internal.pageSize.getHeight();
+                    
+                    const canvasWidth = canvas.width;
+                    const canvasHeight = canvas.height;
+                    
+                    const ratio = canvasHeight / canvasWidth;
+                    let imgHeight = pdfWidth * ratio;
+                    const margin = 10;
+                    const usableWidth = pdfWidth - (margin * 2);
+                    const usableHeight = pdfHeight - (margin * 2);
+                    
+                    imgHeight = usableWidth * ratio;
+
+                    let heightLeft = imgHeight;
+                    let position = margin; 
+
+                    // --- FIX 2: Tell jsPDF the format is 'JPEG' ---
+                    pdf.addImage(imgData, 'JPEG', margin, position, usableWidth, imgHeight);
+                    heightLeft -= usableHeight;
+
+                    while (heightLeft > 0) {
+                        position = heightLeft - imgHeight + margin; 
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'JPEG', margin, position, usableWidth, imgHeight);
+                        heightLeft -= usableHeight;
+                    }
+
+                    pdf.save(`${formattedReqId}.pdf`);
+                    
+                    // --- 4. Clean Up ---
+                    printBtn.style.display = 'block';
+                    downloadBtn.style.display = 'block';
+                    closeBtn.style.display = 'block';
+                    reportContent.innerHTML = '';
+
+                }).catch(err => {
+                    console.error("Error generating PDF:", err);
+                    printBtn.style.display = 'block';
+                    downloadBtn.style.display = 'block';
+                    closeBtn.style.display = 'block';
+                    reportContent.innerHTML = '';
+                });
+            }, 100); // 100ms delay
+        }
+
+        function closeModal() {
+            requestModal.classList.add('hidden');
+        }
+
+        function renderPage() {
+            updateStatusCounts();
+            filterRequests();
+        }
+
+        // Run initialization
+        document.addEventListener('DOMContentLoaded', fetchUserRequests);
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // (This is your universal badge script, it's correct)
+            let approvalsBadge = document.querySelector('a[href="approvalAdmin.html"] .bg-red-500');
+            if (!approvalsBadge) {
+                approvalsBadge = document.querySelector('a[href="approval.html"] .bg-red-500');
+            }
+            const storedCount = localStorage.getItem('pendingCount') || 0;
+            if (approvalsBadge && storedCount > 0) {
+                approvalsBadge.textContent = storedCount;
+            }
+            try {
+                const response = await fetch('get_pending_count.php');
+                const result = await response.json();
+                const liveCount = result.count;
+                if (approvalsBadge) {
+                    approvalsBadge.textContent = liveCount > 0 ? liveCount : '';
+                }
+                localStorage.setItem('pendingCount', liveCount);
+            } catch (error) {
+                console.error('Error fetching pending count:', error);
+            }
+        });
+    </script>
+</body>
+</html>

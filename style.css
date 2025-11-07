@@ -1,0 +1,168 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Background */
+body {
+  background-color: #F9FAFB; /* Light gray background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login Container */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+/* Login Box */
+.login-box {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.system-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1E3A8A; /* Dark Navy Blue */
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.welcome-text {
+  text-align: center;
+  color: #6B7280; /* Neutral Gray */
+  margin-bottom: 20px;
+}
+
+/* Form Labels */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #111827; /* Dark Gray Text */
+  font-weight: 500;
+}
+
+/* Input Fields */
+input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #3B82F6; /* Bright Blue */
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Button */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #3B82F6; /* Bright Blue */
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #1E40AF; /* Darker Blue */
+}
+
+/* Extra Links */
+.extra-links {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.extra-links a {
+  color: #3B82F6;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.extra-links a:hover {
+  text-decoration: underline;
+}
+header {
+  width: 100%;
+  padding: 15px 50px;
+  background: #1E3A8A; /* Dark Navy Blue */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+header .logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+  color: #3B82F6; /* Bright Blue */
+}
+
+header .login-btn {
+  background: #3B82F6;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+header .login-btn:hover {
+  background: #2563EB;
+}
+/* Footer */
+/* ...existing code... */
+
+/* Footer */
+footer {
+  background: #1E3A8A;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JTMK Resource Hub - Login</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="intro.css" />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              navy: "#1E3A8A",
+              "bright-blue": "#3B82F6",
+              "light-green": "#10B981",
+              "dark-green": "#059669",
+              teal: "#06B6D4",
+              "light-bg": "#F9FAFB",
+              "dark-text": "#111827",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        font-family: 'Poppins', sans-serif;
+      }
+
+      /* 🌈 Animated Background Gradient */
+      body {
+        background: linear-gradient(135deg, #1E3A8A, #3B82F6, #10B981);
+        background-size: 400% 400%;
+        min-height: 100vh;
+      }
+      @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Glassmorphism Effect */
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* Floating Decorative Shapes */
+      .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(45deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+        animation: float 6s ease-in-out infinite;
+      }
+      .floating-shape:nth-child(1) { width: 200px; height: 200px; top: 10%; left: 10%; animation-delay: 0s; }
+      .floating-shape:nth-child(2) { width: 150px; height: 150px; top: 60%; left: 5%; animation-delay: 2s; }
+      .floating-shape:nth-child(3) { width: 100px; height: 100px; top: 30%; left: 70%; animation-delay: 4s; }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+      }
+
+      /* Input focus glow */
+      .input-focus:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.4);
+        border-color: #10B981;
+      }
+
+      /* Button animations */
+      button.btn-hover {
+        transition: all 0.3s ease;
+      }
+      button.btn-hover:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+      }
+      button.btn-hover:active {
+        transform: scale(0.98);
+      }
+
+      /* Error box slide in */
+      #loginError {
+        display: none;
+        animation: slideIn 0.5s ease-out;
+      }
+      @keyframes slideIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      footer {
+        text-align: center;
+        color: white;
+        padding: 20px 0;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col min-h-screen">
+    
+    <header>
+      <div class="logo-container">
+        <img src="image/logo_jtmk_2021.png" alt="JTMK Logo" class="logo-img" />
+        <span class="logo-text">JTMK Resource Hub</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="login.html" class="login-btn">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center mt-20 px-4" data-aos="fade-up">
+      <div class="max-w-6xl w-full grid lg:grid-cols-2 gap-8 items-center">
+        <div class="relative text-white space-y-8 p-8" data-aos="fade-right">
+          <div class="floating-shape"></div>
+          <div class="floating-shape"></div>
+          <div class="floating-shape"></div>
+
+          <div class="relative z-10">
+            <img src="image/logo_JTMK_2021.png" alt="JTMK Logo" class="w-48 object-contain mb-6 opacity-90"/>
+            <h1 class="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              JTMK
+              <span class="bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent"><br>
+                Resource Hub
+              </span>
+            </h1>
+            <p class="text-xl lg:text-2xl mb-8 text-blue-100 leading-relaxed">
+              The official smart inventory and procurement system of JTMK, Politeknik Sultan Idris Shah.
+            </p>
+          </div>
+        </div>
+
+        <div class="glass-effect rounded-3xl p-8 lg:p-12 shadow-2xl" data-aos="zoom-in" data-aos-delay="300">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+            <p class="text-blue-200">Sign in to continue</p>
+          </div>
+
+          <form id="loginForm" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium text-blue-200 mb-2">Email</label>
+              <input type="email" id="email" name="email" required
+                class="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-300 input-focus transition-all duration-300"
+                placeholder="Enter your email">
+            </div>
+
+            <div>
+              <label for="password" class="block text-sm font-medium text-blue-200 mb-2">Password</label>
+              <div class="relative">
+                <input type="password" id="password" name="password" required
+                  class="w-full px-4 py-4 pr-10 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-300 input-focus transition-all duration-300"
+                  placeholder="Enter your password">
+                <button type="button" id="togglePassword"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 hover:text-white focus:outline-none">
+                  <i id="eyeIcon" class="bx bx-hide text-xl"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <input type="checkbox" id="rememberMe" name="rememberMe"
+                  class="w-5 h-5 text-emerald-500 bg-white/10 border-white/20 rounded focus:ring-emerald-400 focus:ring-2">
+                <label for="rememberMe" class="text-sm text-blue-200">Remember me</label>
+              </div>
+              <a href="#" onclick="showForgotPassword()" class="text-sm text-emerald-300 hover:text-emerald-200 underline font-medium">Forgot Password?</a>
+            </div>
+
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-emerald-500 to-green-700 text-white font-semibold py-4 px-6 rounded-2xl btn-hover transition-all duration-300 transform">
+              Sign In
+            </button>
+          </form>
+
+          <div id="loginErrorContainer" class="mt-6">
+             <div id="loginError" class="p-4 bg-red-500/20 border border-red-400/30 rounded-2xl">
+                <div class="flex items-center space-x-3">
+                  <svg class="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                  <div>
+                    <h3 class="text-red-400 font-semibold">Login Failed</h3>
+                    <p id="loginErrorMessage" class="text-red-300 text-sm">Invalid email or password.</p>
+                  </div>
+                </div>
+             </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <footer data-aos="fade-up" data-aos-delay="200">
+      <p>© 2025 JTMK Resource Hub. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+      // --- This is the PHP login logic from your OLD code ---
+      document.getElementById("loginForm").addEventListener("submit", async function (e) {
+        e.preventDefault(); // Stop the form from reloading
+        
+        const button = this.querySelector('button[type="submit"]');
+        const originalText = button.textContent;
+        const errorDiv = document.getElementById("loginError");
+        const errorMessage = document.getElementById("loginErrorMessage");
+        
+        // --- Show loading state ---
+        button.textContent = 'Signing In...';
+        button.disabled = true;
+        errorDiv.style.display = "none"; // Hide error on new attempt
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        try {
+            // 1. Send the email and password to your login.php file
+            const response = await fetch("login.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            });
+
+            const result = await response.json();
+
+            // 2. Check if PHP said the login was a success
+            if (result.success) {
+                // SUCCESS!
+                // Save user info to localStorage for the profile dropdown on other pages
+                localStorage.setItem("profileName", result.name);
+                localStorage.setItem("userRole", result.role);
+                localStorage.setItem("profileEmail", result.email); // Added from your old code
+
+                // 3. Redirect to the correct dashboard based on the role
+                if (result.role.toLowerCase() === "admin") {
+                    window.location.href = "maindashboard.html";
+                } else {
+                    window.location.href = "userDashboard.html";
+                }
+            } else {
+                // FAILURE! Show the error message from PHP
+                errorMessage.textContent = result.message; // Set the specific error
+                errorDiv.style.display = "block";
+                button.textContent = originalText;
+                button.disabled = false;
+            }
+        } catch (err) {
+            // This catches server errors (e.g., PHP is not running or file not found)
+            console.error("Login Fetch Error:", err);
+            errorMessage.textContent = "A server error occurred. Please try again.";
+            errorDiv.style.display = "block";
+            button.textContent = originalText;
+            button.disabled = false;
+        }
+      });
+
+      // --- This is the password toggle logic from your NEW code ---
+      document.getElementById("togglePassword").addEventListener("click", function () {
+        const passwordInput = document.getElementById("password");
+        const eyeIcon = document.getElementById("eyeIcon");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.classList.replace('bx-hide', 'bx-show');
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.replace('bx-show', 'bx-hide');
+        }
+      });
+
+      // --- This is the forgot password logic from your NEW code ---
+      window.showForgotPassword = function() {
+        alert('This would normally navigate to a password reset page.');
+      }
+
+      // --- This is the animation init from your NEW code ---
+      AOS.init({
+        duration: 1000,
+        once: true,
+        easing: 'ease-in-out',
+      });
+    </script>
+  </body>
+</html>

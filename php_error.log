@@ -1,0 +1,95 @@
+[02-Nov-2025 09:31:18 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'admin_remark' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:63
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(63): mysqli->prepare('UPDATE requests...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 63
+[02-Nov-2025 10:02:17 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'admin_remark' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:63
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(63): mysqli->prepare('UPDATE requests...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 63
+[02-Nov-2025 10:03:32 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'admin_remark' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:63
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(63): mysqli->prepare('UPDATE requests...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 63
+[02-Nov-2025 10:03:44 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'admin_remark' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:63
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(63): mysqli->prepare('UPDATE requests...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 63
+[02-Nov-2025 10:04:06 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'admin_remark' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:63
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(63): mysqli->prepare('UPDATE requests...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 63
+[02-Nov-2025 10:04:43 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'admin_remark' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:63
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(63): mysqli->prepare('UPDATE requests...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 63
+[02-Nov-2025 10:07:58 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'r.request_name' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:73
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(73): mysqli->prepare('SELECT u.email,...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 73
+[02-Nov-2025 10:10:42 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'r.request_name' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:73
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(73): mysqli->prepare('SELECT u.email,...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 73
+[02-Nov-2025 13:36:36 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'r.request_name' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:73
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(73): mysqli->prepare('SELECT u.email,...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 73
+[02-Nov-2025 13:48:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'r.request_name' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:72
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(72): mysqli->prepare('SELECT u.email,...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 72
+[02-Nov-2025 13:49:07 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'r.request_name' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:72
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(72): mysqli->prepare('SELECT u.email,...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 72
+[02-Nov-2025 13:49:11 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'r.request_name' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:72
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(72): mysqli->prepare('SELECT u.email,...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 72
+[02-Nov-2025 14:02:14 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Commands out of sync; you can't run this command now in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:118
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(118): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 118
+[02-Nov-2025 14:05:06 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'unit_price' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:103
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(103): mysqli->prepare('SELECT item_nam...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 103
+[02-Nov-2025 14:05:38 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'unit_price' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:103
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(103): mysqli->prepare('SELECT item_nam...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 103
+[02-Nov-2025 14:11:40 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'unit_price' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:103
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(103): mysqli->prepare('SELECT item_nam...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 103
+[02-Nov-2025 14:11:46 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'unit_price' in 'field list' in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:103
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(103): mysqli->prepare('SELECT item_nam...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 103
+[02-Nov-2025 14:14:49 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'jtmkreshub_db.inventory_items' doesn't exist in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:122
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(122): mysqli->prepare('SELECT i.displa...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 122
+[02-Nov-2025 14:14:53 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'jtmkreshub_db.inventory_items' doesn't exist in C:\xamppp\htdocs\jtmkreshub\update_request_status.php:122
+Stack trace:
+#0 C:\xamppp\htdocs\jtmkreshub\update_request_status.php(122): mysqli->prepare('SELECT i.displa...')
+#1 {main}
+  thrown in C:\xamppp\htdocs\jtmkreshub\update_request_status.php on line 122
